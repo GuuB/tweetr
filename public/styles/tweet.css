@@ -1,0 +1,55 @@
+main article:hover header{
+  opacity: 1;
+}
+
+main article {
+  color: white;
+  border-radius: 6px;
+  margin: 2em;
+  border: 1px solid grey;
+  border-radius: 6px;
+  padding-bottom: 10px;
+}
+
+main article header {
+  color: #244751;
+  opacity: 0.75;
+  font-size: 1.5em;
+  background-color: #eee;
+  border-bottom: 1px solid #eee;
+  height: 60px;
+  padding-top: 10px;
+  padding-left: 10px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+main .display-picture {
+  height: 45px;
+  width: 45px;
+  border-radius: 14px;
+  float: left;
+  padding: 5px;
+}
+main .username {
+  float: right;
+  font-size: 13px;
+  color: grey;
+  padding-top: 14px;
+  padding-right: 1em;
+}
+main article div {
+  border-bottom: 2px solid #eee;
+  color: #244751;
+}
+main article .content {
+  padding: 12px;
+}
+main footer {
+  color: #244751;
+  padding: 10px;
+
+}
+main footer .dot {
+  float: left;
+  font-size: 10px;
+}

@@ -14,6 +14,8 @@ module.exports = function(db) {
     }, 300);
   });
 
+  ('#tweetbutton').preventDefault
+
   tweets.post("/", function(req, res) {
     if (!req.body.text) {
       res.status(400);

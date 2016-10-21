@@ -1,9 +1,9 @@
 $(document).ready( () => {
 
+// Logic for letter counter & locked submit button
   $("#flash").hide();
   $('textarea#text').keyup(() => {
     const text = $('textarea#text').val().length
-    //const words = $('textarea#text').val().trim(" ")
     $('#counter').text(`${140 - text}`);
     if (text > 140) {
       $('#counter').css("color", "red");
@@ -16,12 +16,47 @@ $(document).ready( () => {
     }
   });
 
+  // Prevents submit form from refreshing page and fetching data dynamically with ajax
+    $("form").submit( (ev) => {
+      ev.preventDefault();
+      var tweetText = $("form").serialize();
+  		$.ajax({
+  			method: 'POST',
+  			url: "/tweets",
+        data: tweetText,
+  			success: (data) => {
+          $("form")[0].reset();
+          $(".tweets").empty();
+          $("#counter").text("140");
+          loadTweets(createTweets);
+  			}
+  		});
+  	});
+
+
+  // function gets http request and uses callback on response
+    var loadTweets = (_cb) => {
+      $.ajax({
+        method: 'GET',
+        url: "/tweets",
+        success: (response) => {
+          _cb(response);
+          console.log("success mate!");
+        },
+        fail: () => {
+          console.log("fatality");
+        }
+      });
+    }
+
+// Appends all tweets together and in order of most recent
   var createTweets = (tweets) => {
     tweets.forEach( (tweet) => {
       $('section.tweets').prepend(createTweetElement(tweet));
     });
   }
 
+// Created each tweet and returns the html string
   var createTweetElement = (tweet) => {
     var $tweet = $('<article>').addClass('tweet');
     $($tweet).html(`
@@ -41,36 +76,7 @@ $(document).ready( () => {
     return $tweet;
   }
 
-  $("form").submit( (ev) => {
-    ev.preventDefault();
-    var tweetText = $("form").serialize();
-		$.ajax({
-			method: 'POST',
-			url: "/tweets",
-      data: tweetText,
-			success: (data) => {
-        $("form")[0].reset();
-        $(".tweets").empty();
-        $("#counter").text("140");
-        loadTweets(createTweets);
-			}
-		});
-	});
-
-  var loadTweets = (_cb) => {
-    $.ajax({
-      method: 'GET',
-      url: "/tweets",
-      success: (response) => {
-        _cb(response);
-        console.log("success mate!");
-      },
-      fail: () => {
-        console.log("fatality");
-      }
-    });
-  }
-
+// Logic for toggle new tweet form
   $("#compose").on("click", () => {
     $(".new-tweet").slideToggle();
     $("#text").select()

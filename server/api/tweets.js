@@ -7,14 +7,12 @@ const tweets  = express.Router();
 module.exports = function(db) {
 
   tweets.get("/", function(req, res) {
-    let tweets = db.getTweets();
-    // simulate delay
-    setTimeout(() => {
+    let tweets = db.getTweets( (tweets) => {
       return res.json(tweets);
-    }, 300);
+    });
   });
 
-  ('#tweetbutton').preventDefault
+  ('#tweetbutton').preventDefault;
 
   tweets.post("/", function(req, res) {
     if (!req.body.text) {
